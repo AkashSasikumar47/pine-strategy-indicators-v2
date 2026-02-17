@@ -7,7 +7,9 @@ A collection of professional-grade Pine Script indicators for TradingView, focus
 
 ### Average True Range (ATR)
 **Purpose:** Measures market volatility to assess price movement potential.
+
 **Core Logic:** Calculates the true range (maximum of high-low, high-previous close, and low-previous close) and applies a simple moving average over the specified period.
+
 **Key Parameters:**
 - ATR Length: Period for averaging (default: 14)
 
@@ -19,7 +21,9 @@ A collection of professional-grade Pine Script indicators for TradingView, focus
 
 ### Bollinger Bands
 **Purpose:** Identifies volatility and potential price extremes using statistical bands.
+
 **Core Logic:** Plots a moving average (basis) with upper and lower bands positioned at a specified number of standard deviations from the basis.
+
 **Key Parameters:**
 - Length: Period for SMA calculation (default: 20)
 - Source: Price input (default: close)
@@ -34,7 +38,9 @@ A collection of professional-grade Pine Script indicators for TradingView, focus
 
 ### Commodity Channel Index (CCI)
 **Purpose:** Momentum oscillator for identifying cyclical trend deviations.
+
 **Core Logic:** Measures the difference between the typical price (HLC3) and its simple moving average, normalized by the mean deviation multiplied by 0.015.
+
 **Key Parameters:**
 - Length: Lookback period (default: 20)
 - Source: Price input (default: hlc3)
@@ -49,7 +55,9 @@ A collection of professional-grade Pine Script indicators for TradingView, focus
 
 ### Moving Average Convergence Divergence (MACD)
 **Purpose:** Trend-following momentum indicator for identifying trend changes and momentum shifts.
+
 **Core Logic:** Calculates the difference between fast and slow exponential moving averages, with a signal line (EMA of MACD) and histogram showing the difference between MACD and signal.
+
 **Key Parameters:**
 - Fast EMA Length: Short-term period (default: 12)
 - Slow EMA Length: Long-term period (default: 26)
@@ -64,7 +72,9 @@ A collection of professional-grade Pine Script indicators for TradingView, focus
 
 ### Williams %R
 **Purpose:** Momentum oscillator for identifying overbought and oversold conditions.
+
 **Core Logic:** Calculates the position of the current close relative to the high-low range over the specified period, expressed as a negative percentage from 0 to -100.
+
 **Key Parameters:**
 - Length: Lookback period (default: 14)
 - Source: Price input (default: close)
