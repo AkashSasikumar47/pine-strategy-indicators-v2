@@ -1,98 +1,88 @@
-<div>
-  <h1>📊 Intermediate Level Indicators</h1>
-  <p>Technical indicators are essential tools for traders and investors in the stock market. They provide insights into market trends, volatility, and potential price movements. By analyzing these indicators, traders can make more informed decisions and improve their trading strategies. This repository explores a selection of intermediate-level technical indicators commonly used in trading and provides explanations, visual representations, and usage instructions.</p>
-</div>
+# Pine Strategy Indicators v2
 
-## 📈 Indicators Included
+## Overview
+A collection of professional-grade Pine Script indicators for TradingView, focused on volatility, momentum, and trend analysis. Each indicator is implemented with clean code and customizable parameters for technical analysis and strategy development.
 
-The repository includes the following technical indicators:
-
-- 📈 Bollinger Bands
-- 📉 Moving Average Convergence Divergence (MACD)
-- 📊 Average True Range (ATR)
-- 🔄 Commodity Channel Index (CCI)
-- 📈 Williams %R
-
-## 📋 Indicator Descriptions
-
-### Bollinger Bands
-![Bollinger Bands](images/bollinger_bands.png)
-Bollinger Bands consist of a middle moving average line and two outer bands that represent the standard deviation of prices. They help identify overbought and oversold conditions and visualize potential price volatility.
-
-**Use Case:**
-Bollinger Bands are used to gauge the volatility of an asset. When the bands narrow, it may indicate low volatility and a potential price breakout when they expand.
-
-**How to Use:**
-To use the Bollinger Bands indicator, follow these steps:
-1. Observe the price movements within the Bollinger Bands.
-2. Look for price touches or penetrations of the upper or lower bands, which can signal overbought or oversold conditions.
-3. Pay attention to the width of the bands as an indicator of volatility.
-4. Combine Bollinger Bands with other technical analysis tools for better trading decisions.
-
-### Moving Average Convergence Divergence (MACD)
-![MACD](images/macd.png)
-MACD is a trend-following momentum indicator that shows the relationship between two moving averages of a security’s price. It helps traders identify potential trend changes and momentum shifts.
-
-**Use Case:**
-MACD helps traders identify the strength and direction of trends in the price data.
-
-**How to Use:**
-To use the Moving Average Convergence Divergence (MACD) indicator, follow these steps:
-1. Calculate the MACD line, which is the difference between two moving averages (usually 12-period and 26-period).
-2. Calculate the signal line, typically a 9-period exponential moving average of the MACD line.
-3. Pay attention to MACD crossovers:
-   - When MACD crosses above the signal line, it may indicate a buy signal.
-   - When MACD crosses below the signal line, it may indicate a sell signal.
-4. Use MACD in conjunction with other indicators for confirmation.
+## Included Indicators
 
 ### Average True Range (ATR)
+**Purpose:** Measures market volatility to assess price movement potential.
+**Core Logic:** Calculates the true range (maximum of high-low, high-previous close, and low-previous close) and applies a simple moving average over the specified period.
+**Key Parameters:**
+- ATR Length: Period for averaging (default: 14)
+
 ![ATR](images/atr.png)
-ATR measures market volatility by analyzing the range between high and low prices. It assists in estimating potential price movements and adjusting trading strategies accordingly.
 
-**Use Case:**
-ATR helps traders understand the level of volatility in an asset, which can be useful for setting stop-loss and take-profit levels.
+**Typical Use Case:** Setting dynamic stop-loss levels and position sizing based on current volatility conditions. Higher ATR values indicate increased volatility, suggesting wider stops.
 
-**How to Use:**
-To use the Average True Range (ATR) indicator, follow these steps:
-1. Calculate the ATR value based on the high and low prices over a specified period (e.g., 14).
-2. Higher ATR values indicate higher volatility, while lower values indicate lower volatility.
-3. Use ATR to set stop-loss levels, with larger ATR values suggesting wider stop-losses in volatile markets.
+---
+
+### Bollinger Bands
+**Purpose:** Identifies volatility and potential price extremes using statistical bands.
+**Core Logic:** Plots a moving average (basis) with upper and lower bands positioned at a specified number of standard deviations from the basis.
+**Key Parameters:**
+- Length: Period for SMA calculation (default: 20)
+- Source: Price input (default: close)
+- StdDev Multiplier: Band width in standard deviations (default: 2.0)
+- Offset: Horizontal shift (default: 0)
+
+![Bollinger Bands](images/bollinger_bands.png)
+
+**Typical Use Case:** Identifying squeeze patterns (low volatility) that precede breakouts, and spotting potential reversals when price touches or exceeds the bands.
+
+---
 
 ### Commodity Channel Index (CCI)
+**Purpose:** Momentum oscillator for identifying cyclical trend deviations.
+**Core Logic:** Measures the difference between the typical price (HLC3) and its simple moving average, normalized by the mean deviation multiplied by 0.015.
+**Key Parameters:**
+- Length: Lookback period (default: 20)
+- Source: Price input (default: hlc3)
+- Smoothing Method: MA type for smoothing line (SMA/EMA/RMA/WMA/VWMA)
+- Smoothing Length: Period for smoothing (default: 5)
+
 ![CCI](images/cci.png)
-CCI detects overbought and oversold levels and potential trend reversals. It measures the difference between the typical price and its simple moving average, normalized by the mean deviation.
 
-**Use Case:**
-CCI helps identify potential reversal points when an asset is overbought or oversold.
+**Typical Use Case:** Identifying overbought conditions above +100 and oversold conditions below -100. Divergences between CCI and price can signal potential reversals.
 
-**How to Use:**
-To use the Commodity Channel Index (CCI) indicator, follow these steps:
-1. Calculate the CCI value using the typical price (average of high, low, and close) and a chosen period (e.g., 14).
-2. Values above +100 suggest overbought conditions, while values below -100 suggest oversold conditions.
-3. Look for divergence between CCI and price, which can signal potential reversals.
-4. Use CCI in conjunction with other indicators for confirmation.
+---
+
+### Moving Average Convergence Divergence (MACD)
+**Purpose:** Trend-following momentum indicator for identifying trend changes and momentum shifts.
+**Core Logic:** Calculates the difference between fast and slow exponential moving averages, with a signal line (EMA of MACD) and histogram showing the difference between MACD and signal.
+**Key Parameters:**
+- Fast EMA Length: Short-term period (default: 12)
+- Slow EMA Length: Long-term period (default: 26)
+- Signal EMA Length: Signal line period (default: 9)
+- Source: Price input (default: close)
+
+![MACD](images/macd.png)
+
+**Typical Use Case:** Identifying trend direction and momentum. Bullish signals occur when MACD crosses above the signal line; bearish signals when crossing below. Histogram expansion indicates momentum strength.
+
+---
 
 ### Williams %R
+**Purpose:** Momentum oscillator for identifying overbought and oversold conditions.
+**Core Logic:** Calculates the position of the current close relative to the high-low range over the specified period, expressed as a negative percentage from 0 to -100.
+**Key Parameters:**
+- Length: Lookback period (default: 14)
+- Source: Price input (default: close)
+
 ![Williams %R](images/williams_r.png)
-Williams %R identifies overbought and oversold conditions based on the close relative to the high-low range. It confirms potential reversal points.
 
-**Use Case:**
-Williams %R confirms potential reversal points identified by other indicators.
+**Typical Use Case:** Values above -20 indicate overbought conditions (potential reversal down), while values below -80 indicate oversold conditions (potential reversal up). Often used for confirmation with other indicators.
 
-**How to Use:**
-To use the Williams %R indicator, follow these steps:
-1. Calculate Williams %R based on the highest high, lowest low, and close price over a specified period (e.g., 14).
-2. Values above -20 suggest overbought conditions, while values below -80 suggest oversold conditions.
-3. Pay attention to crossovers between Williams %R and price for potential buy or sell signals.
-4. Use Williams %R in conjunction with other indicators for confirmation.
+---
 
-## 🚀 Usage and Instructions
+## How to Use
 
-To use these indicators:
-1. Open the TradingView Pine Script editor.
-2. Copy the Pine Script code of the desired indicator from this repository.
-3. Paste the code in the Pine Script editor.
-4. Customize the indicator's parameters as needed.
-5. Apply the indicator to your chart to visualize its signals.
+1. Open TradingView and navigate to the Pine Editor (Alt+E or via Chart menu)
+2. Copy the desired indicator code from the `/indicators` directory
+3. Paste the code into the Pine Editor
+4. Click "Add to Chart" to apply the indicator
+5. Adjust parameters via the indicator settings (gear icon) to suit your trading timeframe and strategy
 
-Feel free to explore, modify, and integrate these indicators into your trading strategies. Happy trading!
+## Disclaimer
+
+These indicators are provided for educational and research purposes only. They are technical analysis tools and should not be considered financial advice. Past performance does not guarantee future results. Always conduct thorough analysis and risk management before making trading decisions.

@@ -5,8 +5,6 @@ indicator(title="Average True Range (ATR)", shorttitle="ATR", overlay=false)
 
 length = input.int(14, title="ATR Length")
 
-high_diff = ta.highest(high, length) - ta.lowest(low, length)
-high_diff_prev = ta.highest(high, length)[1] - ta.lowest(low, length)[1]
 tr = math.max(high - low, math.abs(high - close[1]), math.abs(low - close[1]))
 
 atr_value = ta.sma(tr, length)

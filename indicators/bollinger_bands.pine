@@ -20,8 +20,6 @@ lower_plot = plot(lower, "Lower", color=color.blue, offset=offset)
 
 fill(upper_plot, lower_plot, color=color.rgb(33, 150, 243, 95), title="Background")
 
-hline(0, "Zero Line", color=color.gray, linestyle=hline.style_solid)
-
 // Highlight overbought/oversold conditions
 bgcolor(upper >= high ? color.rgb(255, 169, 82) : na, transp=90)
 bgcolor(lower <= low ? color.rgb(97, 76, 175) : na, transp=90)
