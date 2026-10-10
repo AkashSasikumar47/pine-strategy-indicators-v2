@@ -1,98 +1,98 @@
 # Pine Strategy Indicators v2
 
-## Overview
-A collection of professional-grade Pine Script indicators for TradingView, focused on volatility, momentum, and trend analysis. Each indicator is implemented with clean code and customizable parameters for technical analysis and strategy development.
+Five open-source TradingView indicators written in Pine Script v6: Average True Range, Bollinger Bands, Commodity Channel Index, Moving Average Convergence Divergence and Williams %R. Part of [GAINZ](https://gainz-trading-indicators.vercel.app), 35 indicators across seven collections.
 
-## Included Indicators
+| Indicator                                                                       | Type       | Script                                                                    |
+| ------------------------------------------------------------------------------- | ---------- | ------------------------------------------------------------------------- |
+| [Average True Range](#average-true-range)                                       | Volatility | [`average-true-range.pine`](indicators/average-true-range.pine)           |
+| [Bollinger Bands](#bollinger-bands)                                             | Volatility | [`bollinger-bands.pine`](indicators/bollinger-bands.pine)                 |
+| [Commodity Channel Index](#commodity-channel-index)                             | Momentum   | [`commodity-channel-index.pine`](indicators/commodity-channel-index.pine) |
+| [Moving Average Convergence Divergence](#moving-average-convergence-divergence) | Momentum   | [`macd.pine`](indicators/macd.pine)                                       |
+| [Williams %R](#williams-r)                                                      | Momentum   | [`williams-r.pine`](indicators/williams-r.pine)                           |
 
-### Average True Range (ATR)
-**Purpose:** Measures market volatility to assess price movement potential.
+## Average True Range
 
-**Core Logic:** Calculates the true range (maximum of high-low, high-previous close, and low-previous close) and applies a simple moving average over the specified period.
+![Average True Range](images/average-true-range.png)
 
-**Key Parameters:**
-- ATR Length: Period for averaging (default: 14)
+Measures how far price typically travels in one bar, gaps included.
 
-![ATR](images/atr.png)
+It says nothing about direction. Use it to size stops and positions: a rising ATR means wider swings and more room to give.
 
-**Typical Use Case:** Setting dynamic stop-loss levels and position sizing based on current volatility conditions. Higher ATR values indicate increased volatility, suggesting wider stops.
+| Setting | Default |
+| ------- | ------- |
+| Length  | 14      |
 
----
+## Bollinger Bands
 
-### Bollinger Bands
-**Purpose:** Identifies volatility and potential price extremes using statistical bands.
+![Bollinger Bands](images/bollinger-bands.png)
 
-**Core Logic:** Plots a moving average (basis) with upper and lower bands positioned at a specified number of standard deviations from the basis.
+A 20-bar average wrapped in bands two standard deviations wide, with the space between them shaded.
 
-**Key Parameters:**
-- Length: Period for SMA calculation (default: 20)
-- Source: Price input (default: close)
-- StdDev Multiplier: Band width in standard deviations (default: 2.0)
-- Offset: Horizontal shift (default: 0)
+Bands squeeze before big moves and widen during them. Price riding a band is strength, not automatically an exit.
 
-![Bollinger Bands](images/bollinger_bands.png)
+| Setting        | Default |
+| -------------- | ------- |
+| Length         | 20      |
+| Std. deviation | 2.0     |
+| Source         | Close   |
 
-**Typical Use Case:** Identifying squeeze patterns (low volatility) that precede breakouts, and spotting potential reversals when price touches or exceeds the bands.
+Based on TradingView's built-in Bollinger Bands indicator.
 
----
+## Commodity Channel Index
 
-### Commodity Channel Index (CCI)
-**Purpose:** Momentum oscillator for identifying cyclical trend deviations.
+![Commodity Channel Index](images/commodity-channel-index.png)
 
-**Core Logic:** Measures the difference between the typical price (HLC3) and its simple moving average, normalized by the mean deviation multiplied by 0.015.
+How far the typical price has strayed from its average, scaled by how far it usually strays.
 
-**Key Parameters:**
-- Length: Lookback period (default: 20)
-- Source: Price input (default: hlc3)
-- Smoothing Method: MA type for smoothing line (SMA/EMA/RMA/WMA/VWMA)
-- Smoothing Length: Period for smoothing (default: 5)
+Above +100 is stretched to the upside, below −100 to the downside. Moves back inside the band often mark the turn.
 
-![CCI](images/cci.png)
+| Setting   | Default |
+| --------- | ------- |
+| Length    | 20      |
+| Source    | HLC3    |
+| Smoothing | SMA 5   |
 
-**Typical Use Case:** Identifying overbought conditions above +100 and oversold conditions below -100. Divergences between CCI and price can signal potential reversals.
+Based on TradingView's built-in Commodity Channel Index indicator.
 
----
+## Moving Average Convergence Divergence
 
-### Moving Average Convergence Divergence (MACD)
-**Purpose:** Trend-following momentum indicator for identifying trend changes and momentum shifts.
+![Moving Average Convergence Divergence](images/macd.png)
 
-**Core Logic:** Calculates the difference between fast and slow exponential moving averages, with a signal line (EMA of MACD) and histogram showing the difference between MACD and signal.
+The gap between a 12- and a 26-bar EMA, with a 9-bar signal line and a histogram.
 
-**Key Parameters:**
-- Fast EMA Length: Short-term period (default: 12)
-- Slow EMA Length: Long-term period (default: 26)
-- Signal EMA Length: Signal line period (default: 9)
-- Source: Price input (default: close)
+MACD crossing its signal line marks a shift in momentum. The histogram shows how much force is behind it.
 
-![MACD](images/macd.png)
+| Setting  | Default |
+| -------- | ------- |
+| Fast EMA | 12      |
+| Slow EMA | 26      |
+| Signal   | 9       |
 
-**Typical Use Case:** Identifying trend direction and momentum. Bullish signals occur when MACD crosses above the signal line; bearish signals when crossing below. Histogram expansion indicates momentum strength.
+## Williams %R
 
----
+![Williams %R](images/williams-r.png)
 
-### Williams %R
-**Purpose:** Momentum oscillator for identifying overbought and oversold conditions.
+Where the close sits against the highest high of the last 14 bars, from 0 down to −100.
 
-**Core Logic:** Calculates the position of the current close relative to the high-low range over the specified period, expressed as a negative percentage from 0 to -100.
+Above −20 is overbought, below −80 oversold. The turns out of those zones are the signals.
 
-**Key Parameters:**
-- Length: Lookback period (default: 14)
-- Source: Price input (default: close)
+| Setting | Default |
+| ------- | ------- |
+| Length  | 14      |
+| Source  | Close   |
 
-![Williams %R](images/williams_r.png)
+Based on TradingView's built-in Williams %R indicator.
 
-**Typical Use Case:** Values above -20 indicate overbought conditions (potential reversal down), while values below -80 indicate oversold conditions (potential reversal up). Often used for confirmation with other indicators.
+## How to use
 
----
-
-## How to Use
-
-1. Open TradingView and navigate to the Pine Editor (Alt+E or via Chart menu)
-2. Copy the desired indicator code from the `/indicators` directory
-3. Paste the code into the Pine Editor
-4. Click "Add to Chart" to apply the indicator
-5. Adjust parameters via the indicator settings (gear icon) to suit your trading timeframe and strategy
+1. Open the indicator's `.pine` file in `indicators/` and copy the code.
+2. In TradingView, open the Pine Editor, paste the code and save it.
+3. Click **Add to chart**, then change the defaults in the indicator's settings.
 
 ## Disclaimer
 
-These indicators are provided for educational and research purposes only. They are technical analysis tools and should not be considered financial advice. Past performance does not guarantee future results. Always conduct thorough analysis and risk management before making trading decisions.
+For learning and research. Indicators describe what price has done, not what it will do. Nothing here is financial advice.
+
+## License
+
+[MIT](LICENSE). Indicators based on someone else's work keep their original author's terms.
