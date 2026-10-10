@@ -1,0 +1,19 @@
+//@version=6
+indicator("Bollinger Bands", "BB", overlay = true, timeframe = "", timeframe_gaps = true)
+
+length = input.int(20, "Length", minval = 1)
+source = input.source(close, "Source")
+multiplier = input.float(2.0, "StdDev Multiplier", minval = 0.001, maxval = 50)
+offset = input.int(0, "Offset", minval = -500, maxval = 500)
+
+basis = ta.sma(source, length)
+deviation = multiplier * ta.stdev(source, length)
+upper = basis + deviation
+lower = basis - deviation
+
+plot(basis, "Basis", color.orange, offset = offset)
+upperPlot = plot(upper, "Upper", color.blue, offset = offset)
+lowerPlot = plot(lower, "Lower", color.blue, offset = offset)
+fill(upperPlot, lowerPlot, color.rgb(33, 150, 243, 95), "Background")
+bgcolor(upper >= high ? color.rgb(255, 169, 82, 90) : na)
+bgcolor(lower <= low ? color.rgb(97, 76, 175, 90) : na)

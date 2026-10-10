@@ -1,0 +1,25 @@
+//@version=6
+indicator("Commodity Channel Index", "CCI", overlay = false, format = format.price, precision = 2, timeframe = "", timeframe_gaps = true)
+
+length = input.int(20, "Length", minval = 1)
+source = input.source(hlc3, "Source")
+smoothingType = input.string("SMA", "Method", options = ["SMA", "EMA", "SMMA (RMA)", "WMA", "VWMA"], group = "Smoothing")
+smoothingLength = input.int(5, "Length", minval = 1, maxval = 100, group = "Smoothing")
+
+movingAverage(values, length, maType) =>
+    switch maType
+        "SMA" => ta.sma(values, length)
+        "EMA" => ta.ema(values, length)
+        "SMMA (RMA)" => ta.rma(values, length)
+        "WMA" => ta.wma(values, length)
+        "VWMA" => ta.vwma(values, length)
+
+basis = ta.sma(source, length)
+cci = (source - basis) / (0.015 * ta.dev(source, length))
+
+plot(cci, "CCI", #2962FF)
+upperBand = hline(100, "Upper Band", #787B86, hline.style_dashed)
+hline(0, "Middle Band", color.new(#787B86, 50))
+lowerBand = hline(-100, "Lower Band", #787B86, hline.style_dashed)
+fill(upperBand, lowerBand, color.rgb(33, 150, 243, 90), "Background")
+plot(movingAverage(cci, smoothingLength, smoothingType), "Smoothing Line", #f37f20)
