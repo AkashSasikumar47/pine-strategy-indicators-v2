@@ -1,0 +1,15 @@
+//@version=6
+indicator("Williams %R", "%R", overlay = false, format = format.price, precision = 2, timeframe = "", timeframe_gaps = true)
+
+length = input.int(14, "Length", minval = 1)
+source = input.source(close, "Source")
+
+highestHigh = ta.highest(length)
+lowestLow = ta.lowest(length)
+percentR = 100 * (source - highestHigh) / (highestHigh - lowestLow)
+
+upperBand = hline(-20, "Upper Band", #787B86)
+hline(-50, "Middle Level", #787B86, hline.style_dotted)
+lowerBand = hline(-80, "Lower Band", #787B86)
+fill(upperBand, lowerBand, color.rgb(126, 87, 194, 90), "Background")
+plot(percentR, "%R", #7E57C2)

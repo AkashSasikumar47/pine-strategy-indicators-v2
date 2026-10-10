@@ -1,0 +1,8 @@
+//@version=6
+indicator("Average True Range", "ATR", overlay = false)
+
+length = input.int(14, "Length", minval = 1)
+
+trueRange = math.max(high - low, math.abs(high - close[1]), math.abs(low - close[1]))
+
+plot(ta.sma(trueRange, length), "ATR", color.blue)

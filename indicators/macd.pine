@@ -1,18 +1,14 @@
-//@version=5
-// Author: Akash Sasikumar
-// Copyright: 2023.Akash sasikumar
-indicator(title="Moving Average Convergence Divergence (MACD)", shorttitle="MACD", overlay=false)
+//@version=6
+indicator("Moving Average Convergence Divergence", "MACD", overlay = false)
 
-fast_length = input.int(12, title="Fast EMA Length")
-slow_length = input.int(26, title="Slow EMA Length")
-signal_length = input.int(9, title="Signal EMA Length")
+fastLength = input.int(12, "Fast Length", minval = 1)
+slowLength = input.int(26, "Slow Length", minval = 1)
+signalLength = input.int(9, "Signal Length", minval = 1)
+source = input.source(close, "Source")
 
-source = input(close, title="Source")
+[macdLine, signalLine, histogram] = ta.macd(source, fastLength, slowLength, signalLength)
 
-[macd_line, signal_line, histogram] = ta.macd(source, fast_length, slow_length, signal_length)
-
-plot(macd_line, title="MACD Line", color=color.blue)
-plot(signal_line, title="Signal Line", color=color.red)
-plot(histogram, style=plot.style_histogram, linewidth=1, color=color.green, title="Histogram")
-
-hline(0, title="Zero Line", color=color.gray)
+plot(macdLine, "MACD", color.blue)
+plot(signalLine, "Signal", color.red)
+plot(histogram, "Histogram", color.green, style = plot.style_histogram)
+hline(0, "Zero Line", color.gray)
